@@ -6,7 +6,11 @@ import time
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-df = pd.read_csv(BASE_DIR / "Base_De_Datos_Netflix.csv")
+@st.cache_data
+def cargar_dataset():
+    return pd.read_csv(BASE_DIR / "Base_De_Datos_Netflix.csv")
+
+df = cargar_dataset()
 
 # ==========================
 # Obtener listas para los SelectBox
@@ -52,10 +56,17 @@ cargar_css()
 # Cargar modelo
 # ==========================
 
-modelo = joblib.load(BASE_DIR / "modelo_random_forest.pkl")
-scaler = joblib.load(BASE_DIR / "scaler.pkl")
-encoder = joblib.load(BASE_DIR / "label_encoder.pkl")
-columnas_modelo = joblib.load(BASE_DIR / "columnas_modelo.pkl")
+@st.cache_resource
+def cargar_modelo():
+
+    modelo = joblib.load(BASE_DIR / "modelo_random_forest.pkl")
+    scaler = joblib.load(BASE_DIR / "scaler.pkl")
+    encoder = joblib.load(BASE_DIR / "label_encoder.pkl")
+    columnas = joblib.load(BASE_DIR / "columnas_modelo.pkl")
+
+    return modelo, scaler, encoder, columnas
+
+modelo, scaler, encoder, columnas_modelo = cargar_modelo()
 
 # ==========================
 # Función para preparar datos
@@ -116,9 +127,10 @@ def preparar_datos(df_entrada):
         dtype=int
     )
     # Agregar columnas faltantes
-    for col in columnas_modelo:
-        if col not in datos.columns:
-            datos[col] = 0
+    datos = datos.reindex(
+        columns=columnas_modelo,
+        fill_value=0
+)
 
     # Ordenar columnas
     datos = datos[columnas_modelo]
