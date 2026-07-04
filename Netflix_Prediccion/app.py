@@ -5,7 +5,8 @@ import joblib
 import time
 from pathlib import Path
 
-df = pd.read_csv("Base_De_Datos_Netflix.csv")
+BASE_DIR = Path(__file__).resolve().parent
+df = pd.read_csv(BASE_DIR / "Base_De_Datos_Netflix.csv")
 
 # ==========================
 # Obtener listas para los SelectBox
@@ -51,10 +52,10 @@ cargar_css()
 # Cargar modelo
 # ==========================
 
-modelo = joblib.load("modelo_random_forest.pkl")
-scaler = joblib.load("scaler.pkl")
-encoder = joblib.load("label_encoder.pkl")
-columnas_modelo = joblib.load("columnas_modelo.pkl")
+modelo = joblib.load(BASE_DIR / "modelo_random_forest.pkl")
+scaler = joblib.load(BASE_DIR / "scaler.pkl")
+encoder = joblib.load(BASE_DIR / "label_encoder.pkl")
+columnas_modelo = joblib.load(BASE_DIR / "columnas_modelo.pkl")
 
 # ==========================
 # Función para preparar datos
