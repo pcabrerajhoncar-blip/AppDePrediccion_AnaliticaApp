@@ -1,0 +1,56 @@
+/* Fondo principal */
+.stApp{
+    background-color:#141414;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"]{
+    background-color:#1f1f1f;
+}
+
+/* Títulos */
+h1,h2,h3,h4{
+    color:#E50914 !important;
+}
+
+/* Texto */
+p,label,span{
+    color:white !important;
+}
+
+/* Botones */
+.stButton>button{
+
+    background-color:#E50914;
+
+    color:white;
+
+    border-radius:12px;
+
+    border:none;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    height:55px;
+}
+
+.stButton>button:hover{
+
+    background-color:#B20710;
+}
+
+/* SelectBox */
+
+div[data-baseweb="select"]{
+
+    color:black;
+}
+
+/* Inputs */
+
+input{
+
+    border-radius:10px !important;
+}
